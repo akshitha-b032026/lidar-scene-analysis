@@ -1,0 +1,5 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+numpy>=1.24
+nuscenes-devkit>=1.1.11
+pyquaternion>=0.9.9

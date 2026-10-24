@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LiDAR Scene Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<aside id="side">
+  <header>
+    <h1>LiDAR Scene Analysis <small class="muted">· LiDAR + cameras</small></h1>
+    <p id="mode" class="muted">Connecting…</p>
+  </header>
+
+  <section>
+    <label for="scene">Scene</label>
+    <select id="scene"></select>
+    <p id="desc" class="muted"></p>
+  </section>
+
+  <section>
+    <div class="row"><label for="frame">Frame</label><span id="frameLabel" class="num">–</span></div>
+    <div class="row">
+      <button id="play" aria-label="Play or pause">Play</button>
+      <input id="frame" type="range" min="0" max="0" value="0">
+    </div>
+  </section>
+
+  <section id="camSec" hidden>
+    <label class="chk"><input type="checkbox" id="camBoxes" checked> Overlay boxes on camera</label>
+    <label class="chk"><input type="checkbox" id="camLidar" checked> Overlay LiDAR points on camera</label>
+  </section>
+
+  <section>
+    <label for="color">Colour points by</label>
+    <select id="color">
+      <option value="height">Height</option>
+      <option value="intensity">Intensity</option>
+      <option value="distance">Distance</option>
+    </select>
+    <div class="row"><label for="psize">Point size</label><span id="psizeV" class="num">1.6</span></div>
+    <input id="psize" type="range" min="0.5" max="4" step="0.1" value="1.6">
+    <div class="row"><label for="range">Max range</label><span id="rangeV" class="num">80 m</span></div>
+    <input id="range" type="range" min="10" max="150" step="5" value="80">
+  </section>
+
+  <section>
+    <label>Show categories</label>
+    <div id="filters"></div>
+  </section>
+
+  <section>
+    <label class="chk"><input type="checkbox" id="onlyFlagged"> Only show flagged objects</label>
+    <p id="flagSummary" class="muted"></p>
+  </section>
+
+  <section>
+    <label>Objects in frame <span id="count" class="num"></span></label>
+    <ul id="list"></ul>
+  </section>
+
+  <section id="detail" hidden>
+    <label>Selected object</label>
+    <dl id="detailBody"></dl>
+  </section>
+</aside>
+
+<main id="stage" class="mode-split">
+  <div id="modes" role="group" aria-label="View mode">
+    <button data-m="lidar" title="Key 1">LiDAR</button>
+    <button data-m="camera" title="Key 2">Camera</button>
+    <button data-m="split" class="on" title="Key 3">Split</button>
+    <button data-m="inset" title="Key 4">Inset</button>
+    <button id="hidePanel" title="Key H">Hide panel</button>
+    <button id="fs" title="Key F">Full screen</button>
+  </div>
+  <div id="view"></div>
+  <div id="cam" hidden>
+    <div id="camBar">
+      <div id="camTabs"></div>
+      <div class="seg" id="layoutSeg"><button data-l="1">1 camera</button><button data-l="2">2 cameras</button><button data-l="4" class="on">4 cameras</button><button data-l="6">6 cameras</button></div>
+    </div>
+    <div id="camGrid" class="g4"></div>
+  </div>
+  <p id="stats" class="num"></p>
+  <p id="hint" class="muted">Drag to orbit · scroll to zoom · right-drag to pan · click a box to inspect · keys 1-4 switch view, H hides the panel, F full screen</p>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
